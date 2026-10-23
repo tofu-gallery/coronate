@@ -1,8 +1,14 @@
+// Modified for Tofu: the build reads the pinned upstream commit date from
+// tofu-upstream.json instead of running git, so it works without a checkout.
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import favicons from "@peterek/vite-plugin-favicons";
 import reScript from "@jihchi/vite-plugin-rescript";
-import { execSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+
+const upstream = JSON.parse(
+  readFileSync(new URL("./tofu-upstream.json", import.meta.url), "utf8"),
+);
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -39,9 +45,7 @@ export default defineConfig(({ mode }) => {
       setupFiles: "./tests/setup.js",
     },
     define: {
-      __LAST_COMMIT_DATE__: JSON.stringify(
-        execSync("git log -1 --format=%cs").toString().trim(),
-      ),
+      __LAST_COMMIT_DATE__: JSON.stringify(upstream.date),
       __IS_TEST__: JSON.stringify(mode === "test"),
     },
   };
