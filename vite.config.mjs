@@ -1,5 +1,6 @@
 // Modified for Tofu: the build reads the pinned upstream commit date from
-// tofu-upstream.json instead of running git, so it works without a checkout.
+// tofu-upstream.json instead of running git, so it works without a checkout,
+// and __GITHUB_BACKUP_ENABLED__ turns off the Netlify-dependent gist backup.
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import favicons from "@peterek/vite-plugin-favicons";
@@ -46,6 +47,7 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       __LAST_COMMIT_DATE__: JSON.stringify(upstream.date),
+      __GITHUB_BACKUP_ENABLED__: JSON.stringify(false),
       __IS_TEST__: JSON.stringify(mode === "test"),
     },
   };

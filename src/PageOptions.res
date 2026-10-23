@@ -5,8 +5,10 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
+/* Modified for Tofu: disable the Netlify-dependent GitHub backup panel. */
 open Data
 
+@val external githubBackupEnabled: bool = "__GITHUB_BACKUP_ENABLED__"
 @val external devMode: bool = "import.meta.env.DEV"
 
 let getDateForFile = () => {
@@ -477,7 +479,7 @@ let make = (~windowDispatch=_ => ()) => {
         {React.string("Last export: ")}
         <LastBackupDate date=config.lastBackup />
       </p>
-      <GistOpts configDispatch exportData loadJson />
+      {githubBackupEnabled ? <GistOpts configDispatch exportData loadJson /> : React.null}
       <h3> {"Backup locally"->React.string} </h3>
       <p>
         <a
