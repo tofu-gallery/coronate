@@ -6,6 +6,7 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+/* Modified for Tofu: link to the adapted source alongside upstream attribution. */
 module Splash = {
   @react.component
   let make = () =>
@@ -71,6 +72,14 @@ module Splash = {
             </a>
           </p>
           <p> {React.string("Coronate is free software.")} </p>
+          <p>
+            <a
+              className="pages__footer-link"
+              href="https://github.com/tofu-gallery/coronate/tree/pin/2026-10-23"
+            >
+              {React.string("Source code for this adapted version")}
+            </a>
+          </p>
           <p>
             <a className="pages__footer-link" href=Utils.github_url>
               {React.string("Source code is available")}
